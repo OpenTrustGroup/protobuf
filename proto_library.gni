@@ -116,7 +116,7 @@ template("proto_library") {
     plugin_host_label = invoker.generator_plugin_label + "($host_toolchain)"
     plugin_path =
         get_label_info(plugin_host_label, "root_out_dir") + "/" +
-        get_label_info(plugin_host_label, "name") + host_executable_suffix
+        get_label_info(plugin_host_label, "name")
     generate_with_plugin = true
   } else if (defined(invoker.generator_plugin_script)) {
     plugin_path = invoker.generator_plugin_script
@@ -217,8 +217,7 @@ template("proto_library") {
     args = protos
 
     protoc_label = "//third_party/protobuf:protoc($host_toolchain)"
-    protoc_path = get_label_info(protoc_label, "root_out_dir") + "/protoc" +
-                  host_executable_suffix
+    protoc_path = get_label_info(protoc_label, "root_out_dir") + "/protoc"
     args += [
       # Wrapper should never pick a system protoc.
       # Path should be rebased because |root_build_dir| for current toolchain
