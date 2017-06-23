@@ -138,16 +138,8 @@ template("proto_library") {
 
   if (defined(invoker.proto_in_dir)) {
     proto_in_dir = invoker.proto_in_dir
-    has_nested_dirs = false
-    foreach(proto_source, proto_sources) {
-      if (get_path_info(proto_source, "dir") != proto_in_dir) {
-        has_nested_dirs = true
-      }
-    }
   } else {
     proto_in_dir = get_path_info(proto_sources[0], "dir")
-    has_nested_dirs = false
-
     # Sanity check, |proto_in_dir| should be defined to allow sub-directories.
     foreach(proto_source, proto_sources) {
       assert(get_path_info(proto_source, "dir") == proto_in_dir,
@@ -328,13 +320,6 @@ template("proto_library") {
     public_configs = [ "//third_party/protobuf:using_proto" ]
 
     if (generate_cc || generate_with_plugin) {
-      # Not necessary if all protos are located in the same directory.
-      if (has_nested_dirs) {
-        # It's not enough to set |include_dirs| for target since public imports
-        # expose corresponding includes to header files as well.
-        public_configs += [ ":$config_name" ]
-      }
-
       # If using built-in cc generator, the resulting headers reference headers
       # within protobuf_lite. Hence, dependencies require those headers too.
       # If using generator plugin, extra deps should be resolved by the invoker.
