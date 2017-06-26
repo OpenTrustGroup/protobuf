@@ -179,10 +179,6 @@ static_library("protobuf_lite") {
 # specify the LITE_RUNTIME option. The protocol compiler itself (protoc) falls
 # into that category.
 static_library("protobuf_full") {
-  # Prevent people from depending on this outside our file.
-  visibility = [
-    ":*",
-  ]
   sources = protobuf_lite_sources + [
     "src/google/protobuf/any.cc",
     "src/google/protobuf/any.h",
