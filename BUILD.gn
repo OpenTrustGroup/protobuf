@@ -43,7 +43,8 @@ config("protobuf_warnings") {
     cflags += [ "-Wno-unused-function" ]
     # Note(rudominer) I added these because there were a lot of warnings.
     cflags += [ "-Wno-sign-compare",
-                "-Wno-missing-field-initializers" ]
+                "-Wno-missing-field-initializers",
+                "-Wno-enum-compare-switch" ]
   }
 }
 
