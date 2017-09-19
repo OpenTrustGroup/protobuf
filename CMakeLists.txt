@@ -15,8 +15,8 @@ project(protobuf)
 
 add_compile_options(-Wno-sign-compare
                     -Wno-ignored-qualifiers
-                    -Wno-unused-function
-                    -Wno-enum-compare-switch)
+                    -Wno-unused-function)
+# -Wno-enum-compare-switch not recognized by Cobalt's current version of Clang.
 
 if(protobuf_VERBOSE)
   message(STATUS "Protocol Buffers Configuring...")
