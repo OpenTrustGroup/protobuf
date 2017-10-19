@@ -1,17 +1,24 @@
+# Copyright 2017 The Fuchsia Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+#############################################################
+#                NOTE TO FUCHSIA DEVELOPERS
+#
+# Do not use CMake within the Fuchsia project. This CMake file is
+# used only for the Cobalt stand-alone build, not for building
+# Cobalt's Fuchsia client, nor any other component of Fuchsia.
+#
+# See:
+# https://fuchsia.atlassian.net/projects/CB/issues/CB-61
+#############################################################
+
+# note(rudominer) This file was written by hand by modelling it on the
+# BUILD.gn file.
+
 cmake_minimum_required (VERSION 2.8.10)
 
 project(protobuf)
-
-# note(rudominer) This file was written by hand by modelling it on the
-# BUILD.gn file. see
-# https://fuchsia-review.googlesource.com/#/c/third_party/grpc/+/63311/
-#
-# - Fixes a bug in the handling of the location of cares
-# - Adds support for a new way for a parent project to specify
-# the locations of protobuf, boringssl and gflags, namely the
-# parent project explicitly specifies the paths to all of the
-# relevent source files and compiled libraries.
-# - Deletes csharp target
 
 add_compile_options(-Wno-sign-compare
                     -Wno-ignored-qualifiers
