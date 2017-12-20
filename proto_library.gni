@@ -25,6 +25,9 @@
 #   generate_cc (optional, default true)
 #       Generate C++ protobuf stubs.
 #
+#   generate_go (optional, default false)
+#       Generate Go protobuf stubs.
+#
 #   cc_generator_options (optional)
 #       List of extra flags passed to the protocol compiler.  If you need to
 #       add an EXPORT macro to a protobuf's C++ header, set the
@@ -108,6 +111,12 @@ template("proto_library") {
     generate_python = true
   }
 
+  if (defined(invoker.generate_go)) {
+    generate_go = invoker.generate_go
+  } else {
+    generate_go = false
+  }
+
   if (defined(invoker.generator_plugin_label)) {
     # Straightforward way to get the name of executable doesn't work because
     # |root_out_dir| and |root_build_dir| may differ in cross-compilation and
@@ -171,6 +180,10 @@ template("proto_library") {
     py_out_dir = "$root_out_dir/pyproto/" + proto_out_dir
     rel_py_out_dir = rebase_path(py_out_dir, root_build_dir)
   }
+  if (generate_go) {
+    go_out_dir = "$root_gen_dir/go-proto-gen/" + proto_out_dir
+    rel_go_out_dir = rebase_path(go_out_dir, root_build_dir)
+  }
 
   protos = rebase_path(invoker.sources, proto_in_dir)
   protogens = []
@@ -210,6 +223,12 @@ template("proto_library") {
 
     protoc_label = "//third_party/protobuf:protoc($host_toolchain)"
     protoc_path = get_label_info(protoc_label, "root_out_dir") + "/protoc"
+
+    if (generate_go) {
+      protoc_gen_go_label = "//third_party/golibs/github.com/golang/protobuf/protoc-gen-go($host_toolchain)"
+      protoc_gen_go_path = get_label_info(protoc_gen_go_label, "root_out_dir") + "/protoc-gen-go"
+    }
+
     args += [
       # Wrapper should never pick a system protoc.
       # Path should be rebased because |root_build_dir| for current toolchain
@@ -246,6 +265,15 @@ template("proto_library") {
       ]
     }
 
+    if (generate_go) {
+      args += [
+        "--go_out",
+        rel_go_out_dir,
+        "--plugin",
+        protoc_gen_go_path,
+      ]
+    }
+
     if (generate_with_plugin) {
       args += [
         "--plugin",
@@ -274,6 +302,11 @@ template("proto_library") {
     deps = [
       protoc_label,
     ]
+
+    if (generate_go) {
+      deps += [ protoc_gen_go_label ]
+      inputs += [ protoc_gen_go_path ]
+    }
 
     if (generate_with_plugin) {
       inputs += [ plugin_path ]
