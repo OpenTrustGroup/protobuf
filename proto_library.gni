@@ -181,7 +181,7 @@ template("proto_library") {
     rel_py_out_dir = rebase_path(py_out_dir, root_build_dir)
   }
   if (generate_go) {
-    go_out_dir = "$root_gen_dir/go-proto-gen/" + proto_out_dir
+    go_out_dir = "$root_gen_dir/go-proto-gen/src/" + proto_out_dir
     rel_go_out_dir = rebase_path(go_out_dir, root_build_dir)
   }
 
@@ -202,6 +202,9 @@ template("proto_library") {
     }
     if (generate_python) {
       protogens += [ "$py_out_dir/${proto_path}_pb2.py" ]
+    }
+    if (generate_go) {
+      protogens += [ "$go_out_dir/${proto_path}.pb.go" ]
     }
     if (generate_with_plugin) {
       foreach(suffix, generator_plugin_suffixes) {
@@ -267,10 +270,10 @@ template("proto_library") {
 
     if (generate_go) {
       args += [
-        "--go_out",
+        "--plugin-out-dir",
         rel_go_out_dir,
         "--plugin",
-        protoc_gen_go_path,
+        "./" + rebase_path(protoc_gen_go_path, root_build_dir),
       ]
     }
 
