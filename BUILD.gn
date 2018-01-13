@@ -345,7 +345,7 @@ if (current_toolchain == host_toolchain) {
       "src/google/protobuf/compiler/cpp/cpp_message_field.cc",
       "src/google/protobuf/compiler/cpp/cpp_message_field.h",
       "src/google/protobuf/compiler/cpp/cpp_padding_optimizer.cc",
-      "src/google/protobuf/compiler/cpp/cpp_padding_optimizer.cc"
+      "src/google/protobuf/compiler/cpp/cpp_padding_optimizer.h",
       "src/google/protobuf/compiler/cpp/cpp_primitive_field.cc",
       "src/google/protobuf/compiler/cpp/cpp_primitive_field.h",
       "src/google/protobuf/compiler/cpp/cpp_service.cc",
