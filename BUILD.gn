@@ -110,7 +110,6 @@ protobuf_lite_sources = [
   "src/google/protobuf/stubs/atomicops_internals_arm64_gcc.h",
   "src/google/protobuf/stubs/atomicops_internals_arm_gcc.h",
   "src/google/protobuf/stubs/atomicops_internals_arm_qnx.h",
-  "src/google/protobuf/stubs/atomicops_internals_atomicword_compat.h",
   "src/google/protobuf/stubs/atomicops_internals_generic_c11_atomic.h",
   "src/google/protobuf/stubs/atomicops_internals_generic_gcc.h",
   "src/google/protobuf/stubs/atomicops_internals_mips_gcc.h",
@@ -345,7 +344,8 @@ if (current_toolchain == host_toolchain) {
       "src/google/protobuf/compiler/cpp/cpp_message.h",
       "src/google/protobuf/compiler/cpp/cpp_message_field.cc",
       "src/google/protobuf/compiler/cpp/cpp_message_field.h",
-      "src/google/protobuf/compiler/cpp/cpp_options.h",
+      "src/google/protobuf/compiler/cpp/cpp_padding_optimizer.cc",
+      "src/google/protobuf/compiler/cpp/cpp_padding_optimizer.cc"
       "src/google/protobuf/compiler/cpp/cpp_primitive_field.cc",
       "src/google/protobuf/compiler/cpp/cpp_primitive_field.h",
       "src/google/protobuf/compiler/cpp/cpp_service.cc",
